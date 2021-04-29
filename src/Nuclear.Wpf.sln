@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1939BFF1-B590-46D7-80D6-4290FA299810}"
+	ProjectSection(SolutionItems) = preProject
+		Configurations.NetFX.targets = Configurations.NetFX.targets
+		Configurations.targets = Configurations.targets
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuclear.Wpf.Data.uTests", "Nuclear.Wpf.Data.uTests\Nuclear.Wpf.Data.uTests.csproj", "{69FCBEC4-60C7-4353-B3DB-9E0B5F69B81E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuclear.Wpf.Data", "Nuclear.Wpf.Data\Nuclear.Wpf.Data.csproj", "{36772691-E37E-4420-AA86-1F0249C89894}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuclear.Wpf.Demo.NetCore", "Nuclear.Wpf.Demo.NetCore\Nuclear.Wpf.Demo.NetCore.csproj", "{9FFDF92A-BFFB-4D62-BE72-69D2C076CA50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuclear.Wpf.Demo.NetFX", "Nuclear.Wpf.Demo.NetFX\Nuclear.Wpf.Demo.NetFX.csproj", "{FBDAE089-5D26-4AFE-B881-3073871EDC19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Integration|Any CPU = Integration|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69FCBEC4-60C7-4353-B3DB-9E0B5F69B81E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69FCBEC4-60C7-4353-B3DB-9E0B5F69B81E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69FCBEC4-60C7-4353-B3DB-9E0B5F69B81E}.Integration|Any CPU.ActiveCfg = Integration|Any CPU
+		{69FCBEC4-60C7-4353-B3DB-9E0B5F69B81E}.Integration|Any CPU.Build.0 = Integration|Any CPU
+		{69FCBEC4-60C7-4353-B3DB-9E0B5F69B81E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69FCBEC4-60C7-4353-B3DB-9E0B5F69B81E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36772691-E37E-4420-AA86-1F0249C89894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36772691-E37E-4420-AA86-1F0249C89894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36772691-E37E-4420-AA86-1F0249C89894}.Integration|Any CPU.ActiveCfg = Integration|Any CPU
+		{36772691-E37E-4420-AA86-1F0249C89894}.Integration|Any CPU.Build.0 = Integration|Any CPU
+		{36772691-E37E-4420-AA86-1F0249C89894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36772691-E37E-4420-AA86-1F0249C89894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FFDF92A-BFFB-4D62-BE72-69D2C076CA50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FFDF92A-BFFB-4D62-BE72-69D2C076CA50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FFDF92A-BFFB-4D62-BE72-69D2C076CA50}.Integration|Any CPU.ActiveCfg = Integration|Any CPU
+		{9FFDF92A-BFFB-4D62-BE72-69D2C076CA50}.Integration|Any CPU.Build.0 = Integration|Any CPU
+		{9FFDF92A-BFFB-4D62-BE72-69D2C076CA50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FFDF92A-BFFB-4D62-BE72-69D2C076CA50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBDAE089-5D26-4AFE-B881-3073871EDC19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBDAE089-5D26-4AFE-B881-3073871EDC19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBDAE089-5D26-4AFE-B881-3073871EDC19}.Integration|Any CPU.ActiveCfg = Integration|Any CPU
+		{FBDAE089-5D26-4AFE-B881-3073871EDC19}.Integration|Any CPU.Build.0 = Integration|Any CPU
+		{FBDAE089-5D26-4AFE-B881-3073871EDC19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBDAE089-5D26-4AFE-B881-3073871EDC19}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59232FAD-4D55-44B8-94F3-896BE51B750C}
+	EndGlobalSection
+EndGlobal
