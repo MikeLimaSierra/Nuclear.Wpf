@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
 
 using Nuclear.TestSite;
 using Nuclear.Wpf.Data.MultiValueConverters.Base;
@@ -10,31 +11,65 @@ namespace Nuclear.Wpf.Data.MultiValueConverters {
     class LogicGateConverter_uTests {
 
         [TestMethod]
-        void Implementation() {
+        void Implementations() {
 
             Test.If.Type.IsSubClass<LogicGateConverter<Object>, BaseMultiValueConverter>();
 
+            Test.If.Type.IsSubClass<LogicGateToStringConverter, LogicGateConverter<String>>();
+            Test.If.Type.IsSubClass<LogicGateToBooleanConverter, LogicGateConverter<Boolean>>();
+            Test.If.Type.IsSubClass<LogicGateToColorConverter, LogicGateConverter<Color>>();
+            Test.If.Type.IsSubClass<LogicGateToBrushConverter, LogicGateConverter<Brush>>();
+            Test.If.Type.IsSubClass<LogicGateToVisibilityConverter, LogicGateConverter<Visibility>>();
+            Test.If.Type.IsSubClass<LogicGateToGridLengthConverter, LogicGateConverter<GridLength>>();
+
+        }
+
+        [TestMethod]
+        [TestData(nameof(DefaultsData))]
+        void Defaults<TConv, TValue>(TValue @true, TValue @false, LogicGates gate)
+            where TConv : LogicGateConverter<TValue>, new() {
+
+            TConv conv = default;
+
+            Test.IfNot.Action.ThrowsException(() => conv = new TConv(), out Exception ex);
+
+            Test.If.Value.IsEqual(conv.Gate, gate);
+            Test.If.Value.IsEqual(conv.True, @true);
+            Test.If.Value.IsEqual(conv.False, @false);
+
+        }
+
+        IEnumerable<Object[]> DefaultsData() {
+            return new List<Object[]>() {
+                new Object[] { typeof(LogicGateToBooleanConverter), typeof(Boolean), true, false, LogicGates.And },
+                new Object[] { typeof(LogicGateToStringConverter), typeof(String), "true", "false", LogicGates.And },
+                new Object[] { typeof(LogicGateToColorConverter), typeof(Color), Colors.Green, Colors.Red, LogicGates.And },
+                new Object[] { typeof(LogicGateToBrushConverter), typeof(Brush), Brushes.Green, Brushes.Red, LogicGates.And },
+                new Object[] { typeof(LogicGateToVisibilityConverter), typeof(Visibility), Visibility.Visible, Visibility.Collapsed, LogicGates.And },
+                new Object[] { typeof(LogicGateToGridLengthConverter), typeof(GridLength), new GridLength(1, GridUnitType.Star), GridLength.Auto, LogicGates.And },
+            };
         }
 
         #region ctors
 
         [TestMethod]
-        [TestParameters(typeof(String), LogicGates.And, null, null)]
-        [TestParameters(typeof(String), LogicGates.Nand, null, "True")]
-        [TestParameters(typeof(String), LogicGates.Or, "False", null)]
-        [TestParameters(typeof(String), LogicGates.Nor, "", "True")]
-        [TestParameters(typeof(String), LogicGates.Xor, "False", "")]
-        [TestParameters(typeof(String), LogicGates.Xnor, " ", "True")]
-        [TestParameters(typeof(String), (LogicGates) 42, "False", " ")]
-        [TestParameters(typeof(Int32), LogicGates.And, 0, 10)]
-        void CtorEnum<T>(LogicGates gate, T @true, T @false) {
+        [TestParameters(typeof(String), LogicGates.And, null, null, LogicGates.And)]
+        [TestParameters(typeof(String), LogicGates.Nand, null, "True", LogicGates.Nand)]
+        [TestParameters(typeof(String), LogicGates.Or, "False", null, LogicGates.Or)]
+        [TestParameters(typeof(String), LogicGates.Nor, "", "True", LogicGates.Nor)]
+        [TestParameters(typeof(String), LogicGates.Xor, "False", "", LogicGates.Xor)]
+        [TestParameters(typeof(String), LogicGates.Xnor, " ", "True", LogicGates.Xnor)]
+        [TestParameters(typeof(String), (LogicGates) 42, "False", " ", LogicGates.Custom)]
+        [TestParameters(typeof(Int32), LogicGates.And, 0, 10, LogicGates.And)]
+        void CtorEnum<T>(LogicGates input, T @true, T @false, LogicGates gate) {
 
             LogicGateConverter<T> conv = default;
 
-            Test.IfNot.Action.ThrowsException(() => conv = new LogicGateConverter<T>(gate, @true, @false), out Exception ex);
+            Test.IfNot.Action.ThrowsException(() => conv = new LogicGateConverter<T>(input, @true, @false), out Exception ex);
 
             Test.If.Value.IsEqual(conv.True, @true);
             Test.If.Value.IsEqual(conv.False, @false);
+            Test.If.Value.IsEqual(conv.Gate, gate);
 
         }
 
@@ -46,7 +81,8 @@ namespace Nuclear.Wpf.Data.MultiValueConverters {
 
             Test.IfNot.Action.ThrowsException(() => conv = new LogicGateConverter<T>(logic, @true, @false), out Exception ex);
 
-            Test.If.Value.IsEqual(conv.Logic, logic);
+            Test.If.Reference.IsEqual(conv.Logic, logic);
+            Test.If.Value.IsEqual(conv.Gate, LogicGates.Custom);
             Test.If.Value.IsEqual(conv.True, @true);
             Test.If.Value.IsEqual(conv.False, @false);
 
@@ -70,20 +106,22 @@ namespace Nuclear.Wpf.Data.MultiValueConverters {
         #region properties
 
         [TestMethod]
-        [TestParameters(LogicGates.And)]
-        [TestParameters(LogicGates.Nand)]
-        [TestParameters(LogicGates.Or)]
-        [TestParameters(LogicGates.Nor)]
-        [TestParameters(LogicGates.Xor)]
-        [TestParameters(LogicGates.Xnor)]
-        [TestParameters((LogicGates) 42)]
-        void Gate(LogicGates gate) {
+        [TestParameters(LogicGates.And, LogicGates.And)]
+        [TestParameters(LogicGates.Nand, LogicGates.Nand)]
+        [TestParameters(LogicGates.Or, LogicGates.Or)]
+        [TestParameters(LogicGates.Nor, LogicGates.Nor)]
+        [TestParameters(LogicGates.Xor, LogicGates.Xor)]
+        [TestParameters(LogicGates.Xnor, LogicGates.Xnor)]
+        [TestParameters(LogicGates.Custom, LogicGates.Custom)]
+        [TestParameters((LogicGates) 42, LogicGates.Custom)]
+        void Gate(LogicGates input, LogicGates expected) {
 
             LogicGateConverter<Object> conv = new LogicGateConverter<Object>(null, default, default);
 
-            Test.IfNot.Action.ThrowsException(() => conv.Gate = gate, out Exception ex);
+            Test.IfNot.Action.ThrowsException(() => conv.Gate = input, out Exception ex);
 
             Test.IfNot.Object.IsNull(conv.Logic);
+            Test.If.Value.IsEqual(conv.Gate, expected);
 
         }
 
@@ -176,6 +214,14 @@ namespace Nuclear.Wpf.Data.MultiValueConverters {
         [TestParameters(LogicGates.Xnor, true, false, true, true)]
         [TestParameters(LogicGates.Xnor, true, true, false, true)]
         [TestParameters(LogicGates.Xnor, true, true, true, true)]
+        [TestParameters(LogicGates.Custom, false, false, false, false)]
+        [TestParameters(LogicGates.Custom, false, false, true, false)]
+        [TestParameters(LogicGates.Custom, false, true, false, false)]
+        [TestParameters(LogicGates.Custom, false, true, true, false)]
+        [TestParameters(LogicGates.Custom, true, false, false, false)]
+        [TestParameters(LogicGates.Custom, true, false, true, false)]
+        [TestParameters(LogicGates.Custom, true, true, false, false)]
+        [TestParameters(LogicGates.Custom, true, true, true, false)]
         [TestParameters((LogicGates) 42, false, false, false, false)]
         [TestParameters((LogicGates) 42, false, false, true, false)]
         [TestParameters((LogicGates) 42, false, true, false, false)]
